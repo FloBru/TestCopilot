@@ -2,6 +2,12 @@
 // Task Manager Application
 // ==========================================
 
+const CONFIG = {
+    MAX_TASK_LENGTH: 100,
+    ANIMATION_DELAY: 2000,
+    GHOST_SPEED: 0.15,
+};
+
 class TaskManager {
     constructor() {
         // DOM Elements
@@ -138,6 +144,11 @@ class TaskManager {
      */
     applyTheme(useDark) {
         document.body.classList.toggle('dark', useDark);
+
+        const ghostElement = document.getElementById('ghost');
+        if (ghostElement) {
+            ghostElement.textContent = useDark ? '👻' : '🐇';
+        }
 
         if (this.themeToggle) {
             this.themeToggle.setAttribute('aria-pressed', useDark);
