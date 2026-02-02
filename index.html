@@ -10,6 +10,16 @@
 <body>
     <div class="container">
         <header class="app-header">
+            <button
+                id="themeToggle"
+                class="theme-toggle"
+                type="button"
+                aria-pressed="false"
+                aria-label="Enable dark mode"
+            >
+                <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+                <span class="theme-toggle-text">Dark mode</span>
+            </button>
             <h1>Task Manager</h1>
             <p class="subtitle">Keep track of your daily tasks</p>
         </header>
@@ -122,9 +132,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Cherry Blossoms Container -->
-    <div id="blossoms" class="blossoms-container"></div>
 
     <!-- Ghost Cursor Follower -->
     <div id="ghost" class="ghost" aria-hidden="true">👻</div>

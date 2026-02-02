@@ -12,6 +12,9 @@ class TaskManager {
         this.clearBtn = document.getElementById('clearBtn');
         this.formFeedback = document.getElementById('formFeedback');
         this.filterButtons = document.querySelectorAll('.filter-btn');
+        this.themeToggle = document.getElementById('themeToggle');
+        this.themeToggleIcon = this.themeToggle?.querySelector('.theme-toggle-icon');
+        this.themeToggleText = this.themeToggle?.querySelector('.theme-toggle-text');
 
         // Modal elements
         this.notesModal = document.getElementById('notesModal');
@@ -32,9 +35,11 @@ class TaskManager {
         this.currentFilter = 'all';
         this.currentEditingTaskId = null;
         this.storageKey = 'tasks';
+        this.themeStorageKey = 'theme-preference';
 
         // Initialize
         this.loadTasks();
+        this.initTheme();
         this.attachEventListeners();
         this.render();
     }
@@ -53,6 +58,11 @@ class TaskManager {
         this.filterButtons.forEach((btn) => {
             btn.addEventListener('click', (e) => this.handleFilterChange(e));
         });
+
+        // Theme toggle
+        if (this.themeToggle) {
+            this.themeToggle.addEventListener('click', () => this.handleThemeToggle());
+        }
 
         // Event delegation for task actions (delete, complete, notes)
         this.taskList.addEventListener('click', (e) => {
@@ -88,6 +98,58 @@ class TaskManager {
     }
 
     /**
+     * Initialize theme based on stored preference or system setting
+     */
+    initTheme() {
+        let storedTheme = null;
+
+        try {
+            storedTheme = localStorage.getItem(this.themeStorageKey);
+        } catch (error) {
+            console.error('Failed to load theme preference:', error);
+        }
+
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const useDark = storedTheme ? storedTheme === 'dark' : prefersDark;
+
+        this.applyTheme(useDark);
+    }
+
+    /**
+     * Toggle theme and persist preference
+     */
+    handleThemeToggle() {
+        const useDark = !document.body.classList.contains('dark');
+        this.applyTheme(useDark);
+
+        try {
+            localStorage.setItem(this.themeStorageKey, useDark ? 'dark' : 'light');
+        } catch (error) {
+            console.error('Failed to save theme preference:', error);
+        }
+    }
+
+    /**
+     * Apply theme to document and update toggle UI
+     */
+    applyTheme(useDark) {
+        document.body.classList.toggle('dark', useDark);
+
+        if (this.themeToggle) {
+            this.themeToggle.setAttribute('aria-pressed', useDark);
+            this.themeToggle.setAttribute('aria-label', useDark ? 'Disable dark mode' : 'Enable dark mode');
+        }
+
+        if (this.themeToggleIcon) {
+            this.themeToggleIcon.textContent = useDark ? '☀️' : '🌙';
+        }
+
+        if (this.themeToggleText) {
+            this.themeToggleText.textContent = useDark ? 'Light mode' : 'Dark mode';
+        }
+    }
+
+    /**
      * Handle adding a new task
      */
     handleAddTask(event) {
@@ -101,8 +163,8 @@ class TaskManager {
             return;
         }
 
-        if (taskText.length > 200) {
-            this.showFeedback('Task description must be 200 characters or less');
+        if (taskText.length > 100) {
+            this.showFeedback('Task description must be 100 characters or less');
             return;
         }
 
@@ -456,46 +518,7 @@ class GhostCursor {
     }
 }
 
-// Cherry blossoms falling animation
-class CherryBlossoms {
-    constructor() {
-        this.container = document.getElementById('blossoms');
-        this.blossomEmojis = ['🌸', '🌺', '🌼', '🌻', '💐'];
-        this.spawnRate = 50; // milliseconds between blossoms
-
-        this.startSpawning();
-    }
-
-    startSpawning() {
-        setInterval(() => this.createBlossom(), this.spawnRate);
-    }
-
-    createBlossom() {
-        const blossom = document.createElement('div');
-        blossom.className = 'blossom';
-        blossom.textContent = this.blossomEmojis[Math.floor(Math.random() * this.blossomEmojis.length)];
-
-        // Random horizontal position
-        const randomLeft = Math.random() * window.innerWidth;
-        blossom.style.left = randomLeft + 'px';
-
-        // Random fall duration (3-8 seconds)
-        const duration = 3 + Math.random() * 5;
-        blossom.style.animationDuration = duration + 's';
-
-        // Random horizontal drift
-        const drift = (Math.random() - 0.5) * 100;
-        blossom.style.setProperty('--drift', drift + 'px');
-
-        this.container.appendChild(blossom);
-
-        // Remove blossom after animation completes
-        setTimeout(() => blossom.remove(), duration * 1000);
-    }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     new GhostCursor();
-    new CherryBlossoms();
     new TaskManager();
 });

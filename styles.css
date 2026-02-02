@@ -1,33 +1,4 @@
 /* ==========================================
-   Cherry Blossoms
-   ========================================== */
-.blossoms-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 5000;
-}
-
-.blossom {
-    position: fixed;
-    top: -10px;
-    pointer-events: none;
-    font-size: 1.5rem;
-    opacity: 0.8;
-    animation: fall linear infinite;
-}
-
-@keyframes fall {
-    to {
-        transform: translateY(100vh) rotateZ(360deg);
-        opacity: 0;
-    }
-}
-
-/* ==========================================
    Ghost Cursor Follower
    ========================================== */
 .ghost {
@@ -88,6 +59,26 @@
     --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
+body.dark {
+    --primary-light: #312e81;
+    --success-light: #064e3b;
+    --danger-light: #7f1d1d;
+    --warning-light: #78350f;
+
+    --text-primary: #f3f4f6;
+    --text-secondary: #d1d5db;
+    --text-light: #9ca3af;
+
+    --bg-primary: #0f172a;
+    --bg-secondary: #111827;
+    --bg-tertiary: #1f2937;
+
+    --border-color: #334155;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 6px 12px -4px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 16px 24px -8px rgba(0, 0, 0, 0.6);
+}
+
 /* ==========================================
    Global Styles
    ========================================== */
@@ -141,6 +132,7 @@ body {
     text-align: center;
     margin-bottom: 2rem;
     padding: 2rem 0;
+    position: relative;
 }
 
 .app-header h1 {
@@ -256,6 +248,35 @@ section:last-of-type {
 .btn:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.theme-toggle:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.theme-toggle:focus-visible {
+    outline: 3px solid var(--primary-light);
+    outline-offset: 2px;
 }
 
 .btn:active {
