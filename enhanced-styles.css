@@ -1,0 +1,60 @@
+/* Temporary feedback notifications */
+.temp-feedback {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 0.75rem 1rem;
+    border-radius: var(--border-radius);
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    z-index: 1001;
+    opacity: 0;
+    transform: translateX(100px);
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+}
+
+.temp-feedback.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.temp-feedback-success {
+    background-color: var(--success-color);
+}
+
+.temp-feedback-error {
+    background-color: var(--danger-color);
+}
+
+.temp-feedback-info {
+    background-color: var(--primary-color);
+}
+
+/* Enhanced focus indicators for better accessibility */
+.filter-btn:focus-visible {
+    outline: 3px solid var(--primary-light);
+    outline-offset: 2px;
+}
+
+/* Smart ghost cursor - only show when appropriate */
+@media (hover: none) {
+    .ghost {
+        display: none !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ghost {
+        display: none !important;
+    }
+    
+    .task-item {
+        animation: none !important;
+    }
+    
+    .modal-content {
+        animation: none !important;
+    }
+}

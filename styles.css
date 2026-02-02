@@ -105,7 +105,7 @@ body {
 
 /* Screen reader only text */
 .sr-only {
-    position: absolute;
+    position: csyccyscabsolute;
     width: 1px;
     height: 1px;
     padding: 0;
@@ -796,41 +796,7 @@ section:last-of-type {
     }
 }
 
-/* ==========================================
-   Dark Mode Support (Optional)
-   ========================================== */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --text-primary: #f3f4f6;
-        --text-secondary: #d1d5db;
-        --text-light: #9ca3af;
-        --bg-primary: #1f2937;
-        --bg-secondary: #111827;
-        --bg-tertiary: #0f172a;
-        --border-color: #374151;
-    }
-
-    .task-input {
-        background: var(--bg-secondary);
-        color: var(--text-primary);
-    }
-
-    .task-input:focus {
-        background: var(--bg-secondary);
-    }
-
-    .filter-btn {
-        background: var(--bg-secondary);
-    }
-
-    .task-item {
-        background: var(--bg-secondary);
-    }
-
-    .stat-item {
-        background: var(--bg-tertiary);
-    }
-}
+/* Dark Mode is handled via body.dark class selector at the root level */
 
 /* ==========================================
    Print Styles

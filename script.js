@@ -11,8 +11,7 @@ class TaskManager {
         this.emptyState = document.getElementById('emptyState');
         this.clearBtn = document.getElementById('clearBtn');
         this.formFeedback = document.getElementById('formFeedback');
-        this.filterButtons = document.querySelectorAll('.filter-btn');
-        this.themeToggle = document.getElementById('themeToggle');
+        this.filterButtons = document.querySelectorAll('.filter-btn');        this.themeToggle = document.getElementById('themeToggle');
         this.themeToggleIcon = this.themeToggle?.querySelector('.theme-toggle-icon');
         this.themeToggleText = this.themeToggle?.querySelector('.theme-toggle-text');
 
@@ -89,10 +88,15 @@ class TaskManager {
             }
         });
 
-        // Close modal on Escape key
+        // Close modal on Escape key and implement focus trap
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.notesModal.classList.contains('show')) {
                 this.closeNotesModal();
+            }
+            
+            // Focus trap for modal
+            if (this.notesModal.classList.contains('show') && e.key === 'Tab') {
+                this.handleModalFocusTrap(e);
             }
         });
     }
@@ -163,8 +167,8 @@ class TaskManager {
             return;
         }
 
-        if (taskText.length > 100) {
-            this.showFeedback('Task description must be 100 characters or less');
+        if (taskText.length > CONFIG.MAX_TASK_LENGTH) {
+            this.showFeedback(`Task description must be ${CONFIG.MAX_TASK_LENGTH} characters or less`);
             return;
         }
 
@@ -207,6 +211,7 @@ class TaskManager {
 
         if (task) {
             this.currentEditingTaskId = taskId;
+            this.previousFocusElement = event.target; // Store reference to triggering button
             this.modalTaskTitle.textContent = `Notes for: "${this.escapeHtml(task.text)}"`;
             this.notesTextarea.value = task.notes || '';
             this.openNotesModal();
@@ -226,6 +231,7 @@ class TaskManager {
             this.render();
             this.closeNotesModal();
             this.announce(`Notes saved for task "${task.text}"`);
+            this.showTempFeedback('Notes saved successfully!', 'success');
         }
     }
 
@@ -246,6 +252,12 @@ class TaskManager {
         this.notesModal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
         this.currentEditingTaskId = null;
+        
+        // Restore focus to the triggering element
+        if (this.previousFocusElement && this.previousFocusElement.isConnected) {
+            this.previousFocusElement.focus();
+        }
+        this.previousFocusElement = null;
     }
 
     /**
@@ -255,11 +267,13 @@ class TaskManager {
         const taskId = parseInt(event.target.dataset.taskId, 10);
         const taskText = event.target.dataset.taskText;
 
-        this.tasks = this.tasks.filter((task) => task.id !== taskId);
-        this.saveTasks();
-        this.render();
-
-        this.announce(`Task "${taskText}" deleted`);
+        // Add confirmation for consistency with bulk delete
+        if (confirm(`Delete task "${taskText}"?`)) {
+            this.tasks = this.tasks.filter((task) => task.id !== taskId);
+            this.saveTasks();
+            this.render();
+            this.announce(`Task "${taskText}" deleted`);
+        }
     }
 
     /**
@@ -355,11 +369,11 @@ class TaskManager {
         this.clearBtn.disabled = !hasCompleted;
 
         // Show/hide empty state
-        if (filteredTasks.length === 0 && this.currentFilter === 'all' && this.tasks.length === 0) {
-            this.emptyState.style.display = 'block';
-            this.taskList.style.display = 'none';
-        } else if (filteredTasks.length === 0) {
-            this.emptyState.textContent = `No ${this.currentFilter !== 'all' ? this.currentFilter : ''} tasks.`;
+        if (filteredTasks.length === 0) {
+            const emptyMessage = this.tasks.length === 0 
+                ? 'No tasks yet. Add one to get started! 🚀'
+                : `No ${this.currentFilter !== 'all' ? this.currentFilter : ''} tasks.`;
+            this.emptyState.textContent = emptyMessage;
             this.emptyState.style.display = 'block';
             this.taskList.style.display = 'none';
         } else {
@@ -427,15 +441,34 @@ class TaskManager {
     }
 
     /**
-     * Save tasks to localStorage
+     * Save tasks to localStorage with retry mechanism
      */
     saveTasks() {
-        try {
-            localStorage.setItem(this.storageKey, JSON.stringify(this.tasks));
-        } catch (error) {
-            console.error('Failed to save tasks:', error);
-            this.showFeedback('Failed to save tasks. Storage might be full.');
-        }
+        const maxRetries = 3;
+        let retryCount = 0;
+        
+        const attemptSave = () => {
+            try {
+                localStorage.setItem(this.storageKey, JSON.stringify(this.tasks));
+            } catch (error) {
+                console.error('Failed to save tasks:', error);
+                retryCount++;
+                
+                if (retryCount < maxRetries && error.name === 'QuotaExceededError') {
+                    // Try to clear some space and retry
+                    this.cleanupLocalStorage();
+                    setTimeout(attemptSave, 100);
+                } else {
+                    this.showFeedback(
+                        retryCount >= maxRetries 
+                            ? 'Failed to save tasks after multiple attempts. Please check your storage.'
+                            : 'Failed to save tasks. Storage might be full.'
+                    );
+                }
+            }
+        };
+        
+        attemptSave();
     }
 
     /**
@@ -472,6 +505,73 @@ class TaskManager {
     }
 
     /**
+     * Handle focus trap within modal
+     */
+    handleModalFocusTrap(event) {
+        const focusableElements = this.notesModal.querySelectorAll(
+            'button, textarea, input, [tabindex]:not([tabindex="-1"])'
+        );
+        
+        if (focusableElements.length === 0) return;
+        
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        
+        if (event.shiftKey) {
+            // Shift + Tab (backward)
+            if (document.activeElement === firstElement) {
+                event.preventDefault();
+                lastElement.focus();
+            }
+        } else {
+            // Tab (forward)
+            if (document.activeElement === lastElement) {
+                event.preventDefault();
+                firstElement.focus();
+            }
+        }
+    }
+
+    /**
+     * Show temporary feedback message with optional type
+     */
+    showTempFeedback(message, type = 'info') {
+        const feedback = document.createElement('div');
+        feedback.className = `temp-feedback temp-feedback-${type}`;
+        feedback.textContent = message;
+        feedback.setAttribute('role', 'status');
+        feedback.setAttribute('aria-live', 'polite');
+        
+        document.body.appendChild(feedback);
+        
+        // Animate in
+        setTimeout(() => feedback.classList.add('show'), 10);
+        
+        // Remove after delay
+        setTimeout(() => {
+            feedback.classList.remove('show');
+            setTimeout(() => feedback.remove(), 300);
+        }, CONFIG.ANIMATION_DELAY);
+    }
+
+    /**
+     * Clean up localStorage to free space
+     */
+    cleanupLocalStorage() {
+        try {
+            // Remove old or unnecessary items (extend as needed)
+            const keysToCheck = Object.keys(localStorage);
+            keysToCheck.forEach(key => {
+                if (key.startsWith('temp-') || key.includes('cache')) {
+                    localStorage.removeItem(key);
+                }
+            });
+        } catch (error) {
+            console.error('Failed to cleanup localStorage:', error);
+        }
+    }
+
+    /**
      * Escape HTML special characters to prevent XSS
      */
     escapeHtml(text) {
@@ -485,7 +585,7 @@ class TaskManager {
 // Initialize Application
 // ==========================================
 
-// Ghost cursor follower
+// Ghost cursor follower with smart device detection
 class GhostCursor {
     constructor() {
         this.ghost = document.getElementById('ghost');
@@ -493,10 +593,24 @@ class GhostCursor {
         this.ghostY = 0;
         this.mouseX = 0;
         this.mouseY = 0;
-        this.speed = 0.15; // Lower = slower, more floaty
+        this.speed = CONFIG.GHOST_SPEED;
+        this.isEnabled = this.shouldEnableGhost();
 
-        document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-        this.animateGhost();
+        if (this.isEnabled && this.ghost) {
+            document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+            this.animateGhost();
+        } else if (this.ghost) {
+            this.ghost.style.display = 'none';
+        }
+    }
+
+    /**
+     * Determine if ghost cursor should be enabled based on device capabilities
+     */
+    shouldEnableGhost() {
+        // Disable on touch-only devices
+        return window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+               !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     }
 
     handleMouseMove(event) {
@@ -513,8 +627,10 @@ class GhostCursor {
         this.ghost.style.left = this.ghostX + 'px';
         this.ghost.style.top = this.ghostY + 'px';
 
-        // Continue animation
-        requestAnimationFrame(() => this.animateGhost());
+        // Continue animation if enabled
+        if (this.isEnabled) {
+            requestAnimationFrame(() => this.animateGhost());
+        }
     }
 }
 
