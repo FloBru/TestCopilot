@@ -1,38 +1,134 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample HTML Page</title> 
+    <meta name="description" content="A simple and elegant task manager application">
+    <title>Task Manager - Stay Organized</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Welcome to My Sample Page</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="#section1">Section 1</a></li>
-            <li><a href="#section2">Section 2</a></li>
-            <li><a href="#section3">Section 3</a></li>
-        </ul>
-    </nav>
-    <main>
-        <section id="section1">
-            <h2>Section 1</h2>
-            <p>This is the first section of the sample page.</p>
-        </section>
-        <section id="section2">
-            <h2>Section 2</h2>
-            <p>This is the second section of the sample page.</p>
-        </section>
-        <section id="section3">
-            <h2>Section 3</h2>
-            <p>This is the third section of the sample page.</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 Sample Page. All rights reserved.</p>
-    </footer>   
+    <div class="container">
+        <header class="app-header">
+            <h1>Task Manager</h1>
+            <p class="subtitle">Keep track of your daily tasks</p>
+        </header>
+
+        <main class="app-main">
+            <!-- Add Task Section -->
+            <section class="add-task-section" aria-labelledby="add-task-heading">
+                <h2 id="add-task-heading" class="sr-only">Add a new task</h2>
+                <form class="task-input-form" id="taskForm">
+                    <div class="input-group">
+                        <input
+                            type="text"
+                            id="taskInput"
+                            class="task-input"
+                            placeholder="Add a new task..."
+                            aria-label="Task description"
+                            required
+                        >
+                        <button type="submit" class="btn btn-primary" aria-label="Add task">
+                            <span class="btn-text">Add Task</span>
+                            <span class="btn-icon" aria-hidden="true">+</span>
+                        </button>
+                    </div>
+                    <div class="form-feedback" id="formFeedback" role="status" aria-live="polite"></div>
+                </form>
+            </section>
+
+            <!-- Task Stats Section -->
+            <section class="task-stats" aria-labelledby="stats-heading">
+                <h2 id="stats-heading" class="sr-only">Task statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Total Tasks</span>
+                        <span class="stat-value" id="totalCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Completed</span>
+                        <span class="stat-value" id="completedCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Remaining</span>
+                        <span class="stat-value" id="remainingCount">0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Filter Section -->
+            <section class="filter-section" aria-labelledby="filter-heading">
+                <h2 id="filter-heading" class="sr-only">Filter tasks</h2>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all" aria-pressed="true">
+                        All
+                    </button>
+                    <button class="filter-btn" data-filter="active" aria-pressed="false">
+                        Active
+                    </button>
+                    <button class="filter-btn" data-filter="completed" aria-pressed="false">
+                        Completed
+                    </button>
+                </div>
+            </section>
+
+            <!-- Tasks List Section -->
+            <section class="tasks-section" aria-labelledby="tasks-heading">
+                <h2 id="tasks-heading" class="sr-only">Your tasks</h2>
+                <div id="emptyState" class="empty-state">
+                    <p>No tasks yet. Add one to get started! 🚀</p>
+                </div>
+                <ul class="task-list" id="taskList" role="list">
+                    <!-- Tasks will be inserted here by JavaScript -->
+                </ul>
+            </section>
+
+            <!-- Clear Completed Section -->
+            <section class="action-section" aria-labelledby="action-heading">
+                <h2 id="action-heading" class="sr-only">Bulk actions</h2>
+                <button id="clearBtn" class="btn btn-secondary" aria-label="Clear all completed tasks">
+                    Clear Completed
+                </button>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <p>&copy; 2025 Task Manager. Built with care.</p>
+        </footer>
+    </div>
+
+    <!-- Notes Modal -->
+    <div id="notesModal" class="modal" role="dialog" aria-labelledby="notesModalTitle" aria-hidden="true">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="notesModalTitle">Task Notes</h2>
+                <button class="modal-close" aria-label="Close notes" id="closeNotesBtn">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-task-title" id="modalTaskTitle"></p>
+                <textarea
+                    id="notesTextarea"
+                    class="notes-textarea"
+                    placeholder="Add your notes here..."
+                    aria-label="Task notes"
+                ></textarea>
+            </div>
+            <div class="modal-footer">
+                <button id="saveNotesBtn" class="btn btn-primary">Save Notes</button>
+                <button id="cancelNotesBtn" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cherry Blossoms Container -->
+    <div id="blossoms" class="blossoms-container"></div>
+
+    <!-- Ghost Cursor Follower -->
+    <div id="ghost" class="ghost" aria-hidden="true">👻</div>
+
+    <script src="script.js"></script>
+</body>
 </html>
