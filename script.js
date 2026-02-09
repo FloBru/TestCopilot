@@ -207,6 +207,7 @@ class TaskManager {
 
 
 
+
         this.languageToggleGroup = document.getElementById('languageToggleGroup');
         this.languageButtons = document.querySelectorAll('[data-language]');
         this.themeToggle = document.getElementById('themeToggle');
@@ -233,6 +234,7 @@ class TaskManager {
         this.currentFilter = 'all';
         this.currentEditingTaskId = null;
         this.storageKey = 'tasks';
+        this.languageStorageKey = 'language-preference';
         this.themeStorageKey = 'theme-preference';
         this.unicornStorageKey = 'unicorn-mode';
 
