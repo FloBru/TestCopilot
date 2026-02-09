@@ -3,14 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A simple and elegant task manager application">
-    <title>Task Manager - Stay Organized</title>
+    <meta name="description" content="A simple and elegant task manager application" data-i18n-attr-content="meta.description">
+    <title data-i18n="meta.title">Task Manager - Stay Organized</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="enhanced-styles.css">
 </head>
 <body>
     <div class="container">
         <header class="app-header">
+            <div class="language-toggle-group" role="group" aria-label="Language selector" id="languageToggleGroup">
+                <button
+                    class="language-toggle-btn"
+                    type="button"
+                    data-language="en"
+                    aria-pressed="false"
+                    aria-label="Switch language to English"
+                >
+                    EN
+                </button>
+                <button
+                    class="language-toggle-btn"
+                    type="button"
+                    data-language="de"
+                    aria-pressed="false"
+                    aria-label="Switch language to German"
+                >
+                    DE
+                </button>
+                <button
+                    class="language-toggle-btn"
+                    type="button"
+                    data-language="es"
+                    aria-pressed="false"
+                    aria-label="Switch language to Spanish"
+                >
+                    ES
+                </button>
+            </div>
             <button
                 id="themeToggle"
                 class="theme-toggle"
@@ -21,14 +50,14 @@
                 <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
                 <span class="theme-toggle-text">Dark mode</span>
             </button>
-            <h1>Task Manager</h1>
-            <p class="subtitle">Keep track of your daily tasks</p>
+            <h1 data-i18n="app.title">Task Manager</h1>
+            <p class="subtitle" data-i18n="app.subtitle">Keep track of your daily tasks</p>
         </header>
 
         <main class="app-main">
             <!-- Add Task Section -->
             <section class="add-task-section" aria-labelledby="add-task-heading">
-                <h2 id="add-task-heading" class="sr-only">Add a new task</h2>
+                <h2 id="add-task-heading" class="sr-only" data-i18n="addTask.heading">Add a new task</h2>
                 <form class="task-input-form" id="taskForm">
                     <div class="input-group">
                         <input
@@ -37,10 +66,12 @@
                             class="task-input"
                             placeholder="Add a new task..."
                             aria-label="Task description"
+                            data-i18n-attr-placeholder="form.placeholder"
+                            data-i18n-attr-aria-label="form.ariaLabel"
                             required
                         >
-                        <button type="submit" class="btn btn-primary" aria-label="Add task">
-                            <span class="btn-text">Add Task</span>
+                        <button type="submit" class="btn btn-primary" aria-label="Add task" data-i18n-attr-aria-label="form.addButtonAria">
+                            <span class="btn-text" data-i18n="form.addButtonText">Add Task</span>
                             <span class="btn-icon" aria-hidden="true">+</span>
                         </button>
                     </div>
@@ -50,18 +81,18 @@
 
             <!-- Task Stats Section -->
             <section class="task-stats" aria-labelledby="stats-heading">
-                <h2 id="stats-heading" class="sr-only">Task statistics</h2>
+                <h2 id="stats-heading" class="sr-only" data-i18n="stats.heading">Task statistics</h2>
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <span class="stat-label">Total Tasks</span>
+                        <span class="stat-label" data-i18n="stats.total">Total Tasks</span>
                         <span class="stat-value" id="totalCount">0</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Completed</span>
+                        <span class="stat-label" data-i18n="stats.completed">Completed</span>
                         <span class="stat-value" id="completedCount">0</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">Remaining</span>
+                        <span class="stat-label" data-i18n="stats.remaining">Remaining</span>
                         <span class="stat-value" id="remainingCount">0</span>
                     </div>
                 </div>
@@ -69,25 +100,25 @@
 
             <!-- Filter Section -->
             <section class="filter-section" aria-labelledby="filter-heading">
-                <h2 id="filter-heading" class="sr-only">Filter tasks</h2>
+                <h2 id="filter-heading" class="sr-only" data-i18n="filter.heading">Filter tasks</h2>
                 <div class="filter-buttons">
                     <button class="filter-btn active" data-filter="all" aria-pressed="true">
-                        All
+                        <span data-i18n="filters.all">All</span>
                     </button>
                     <button class="filter-btn" data-filter="active" aria-pressed="false">
-                        Active
+                        <span data-i18n="filters.active">Active</span>
                     </button>
                     <button class="filter-btn" data-filter="completed" aria-pressed="false">
-                        Completed
+                        <span data-i18n="filters.completed">Completed</span>
                     </button>
                 </div>
             </section>
 
             <!-- Tasks List Section -->
             <section class="tasks-section" aria-labelledby="tasks-heading">
-                <h2 id="tasks-heading" class="sr-only">Your tasks</h2>
+                <h2 id="tasks-heading" class="sr-only" data-i18n="tasks.heading">Your tasks</h2>
                 <div id="emptyState" class="empty-state">
-                    <p>No tasks yet. Add one to get started! 🚀</p>
+                    <p id="emptyStateText" data-i18n="empty.noTasks">No tasks yet. Add one to get started! 🚀</p>
                 </div>
                 <ul class="task-list" id="taskList" role="list">
                     <!-- Tasks will be inserted here by JavaScript -->
@@ -96,15 +127,15 @@
 
             <!-- Clear Completed Section -->
             <section class="action-section" aria-labelledby="action-heading">
-                <h2 id="action-heading" class="sr-only">Bulk actions</h2>
-                <button id="clearBtn" class="btn btn-secondary" aria-label="Clear all completed tasks">
-                    Clear Completed
+                <h2 id="action-heading" class="sr-only" data-i18n="actions.heading">Bulk actions</h2>
+                <button id="clearBtn" class="btn btn-secondary" aria-label="Clear all completed tasks" data-i18n-attr-aria-label="actions.clearCompletedAria">
+                    <span data-i18n="actions.clearCompleted">Clear Completed</span>
                 </button>
             </section>
         </main>
 
         <footer class="app-footer">
-            <p>&copy; 2025 Task Manager. Built with care.</p>
+            <p data-i18n="footer.text">&copy; 2025 Task Manager. Built with care.</p>
         </footer>
     </div>
 
@@ -113,8 +144,8 @@
         <div class="modal-overlay"></div>
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="notesModalTitle">Task Notes</h2>
-                <button class="modal-close" aria-label="Close notes" id="closeNotesBtn">
+                <h2 id="notesModalTitle" data-i18n="modal.title">Task Notes</h2>
+                <button class="modal-close" aria-label="Close notes" id="closeNotesBtn" data-i18n-attr-aria-label="modal.closeAria">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -125,11 +156,13 @@
                     class="notes-textarea"
                     placeholder="Add your notes here..."
                     aria-label="Task notes"
+                    data-i18n-attr-placeholder="modal.taskNotesPlaceholder"
+                    data-i18n-attr-aria-label="modal.taskNotesAria"
                 ></textarea>
             </div>
             <div class="modal-footer">
-                <button id="saveNotesBtn" class="btn btn-primary">Save Notes</button>
-                <button id="cancelNotesBtn" class="btn btn-secondary">Cancel</button>
+                <button id="saveNotesBtn" class="btn btn-primary" data-i18n="modal.save">Save Notes</button>
+                <button id="cancelNotesBtn" class="btn btn-secondary" data-i18n="modal.cancel">Cancel</button>
             </div>
         </div>
     </div>

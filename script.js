@@ -8,6 +8,191 @@ const CONFIG = {
     GHOST_SPEED: 0.15,
 };
 
+const STRINGS = {
+    en: {
+        'meta.title': 'Task Manager - Stay Organized',
+        'meta.description': 'A simple and elegant task manager application',
+        'app.title': 'Task Manager',
+        'app.subtitle': 'Keep track of your daily tasks',
+        'addTask.heading': 'Add a new task',
+        'form.placeholder': 'Add a new task...',
+        'form.ariaLabel': 'Task description',
+        'form.addButtonText': 'Add Task',
+        'form.addButtonAria': 'Add task',
+        'stats.heading': 'Task statistics',
+        'stats.total': 'Total Tasks',
+        'stats.completed': 'Completed',
+        'stats.remaining': 'Remaining',
+        'filter.heading': 'Filter tasks',
+        'filters.all': 'All',
+        'filters.active': 'Active',
+        'filters.completed': 'Completed',
+        'tasks.heading': 'Your tasks',
+        'empty.noTasks': 'No tasks yet. Add one to get started! 🚀',
+        'empty.noFilterTasks': 'No {filter} tasks.',
+        'actions.heading': 'Bulk actions',
+        'actions.clearCompleted': 'Clear Completed',
+        'actions.clearCompletedAria': 'Clear all completed tasks',
+        'footer.text': '© 2025 Task Manager. Built with care.',
+        'modal.title': 'Task Notes',
+        'modal.closeAria': 'Close notes',
+        'modal.notesFor': 'Notes for: "{task}"',
+        'modal.taskNotesPlaceholder': 'Add your notes here...',
+        'modal.taskNotesAria': 'Task notes',
+        'modal.save': 'Save Notes',
+        'modal.cancel': 'Cancel',
+        'language.toggleToEnglish': 'Switch language to English',
+        'language.toggleToGerman': 'Switch language to German',
+        'language.toggleToSpanish': 'Switch language to Spanish',
+        'theme.ariaEnable': 'Enable dark mode',
+        'theme.ariaDisable': 'Disable dark mode',
+        'validation.empty': 'Please enter a task description',
+        'validation.length': 'Task description must be {max} characters or less',
+        'validation.duplicate': 'This task already exists',
+        'announce.taskAdded': 'Task "{task}" added successfully',
+        'announce.taskDeleted': 'Task "{task}" deleted',
+        'announce.taskStatusChanged': 'Task "{task}" {status}',
+        'announce.notesSaved': 'Notes saved for task "{task}"',
+        'announce.completedDeleted': '{count} completed task(s) deleted',
+        'confirm.deleteTask': 'Delete task "{task}"?',
+        'confirm.deleteCompleted': 'Delete {count} completed task(s)?',
+        'task.markComplete': 'Mark task as complete',
+        'task.markIncomplete': 'Mark task as incomplete',
+        'task.editNotesAria': 'Edit notes for: {task}',
+        'task.deleteAria': 'Delete task: {task}',
+        'task.notesButton': 'Notes',
+        'task.deleteButton': 'Delete',
+        'status.completed': 'marked as completed',
+        'status.incomplete': 'marked as incomplete',
+        'feedback.notesSaved': 'Notes saved successfully!',
+        'storage.saveFailed': 'Failed to save tasks. Storage might be full.',
+        'storage.saveFailedRetries': 'Failed to save tasks after multiple attempts. Please check your storage.',
+    },
+    de: {
+        'meta.title': 'Aufgabenmanager – organisiert bleiben',
+        'meta.description': 'Eine einfache und elegante Aufgabenverwaltung',
+        'app.title': 'Aufgabenmanager',
+        'app.subtitle': 'Behalte deine täglichen Aufgaben im Blick',
+        'addTask.heading': 'Neue Aufgabe hinzufügen',
+        'form.placeholder': 'Neue Aufgabe hinzufügen...',
+        'form.ariaLabel': 'Aufgabenbeschreibung',
+        'form.addButtonText': 'Aufgabe hinzufügen',
+        'form.addButtonAria': 'Aufgabe hinzufügen',
+        'stats.heading': 'Aufgabenstatistik',
+        'stats.total': 'Gesamt',
+        'stats.completed': 'Erledigt',
+        'stats.remaining': 'Offen',
+        'filter.heading': 'Aufgaben filtern',
+        'filters.all': 'Alle',
+        'filters.active': 'Aktiv',
+        'filters.completed': 'Erledigt',
+        'tasks.heading': 'Deine Aufgaben',
+        'empty.noTasks': 'Noch keine Aufgaben. Füge eine hinzu, um zu starten! 🚀',
+        'empty.noFilterTasks': 'Keine {filter}-Aufgaben.',
+        'actions.heading': 'Sammelaktionen',
+        'actions.clearCompleted': 'Erledigte löschen',
+        'actions.clearCompletedAria': 'Alle erledigten Aufgaben löschen',
+        'footer.text': '© 2025 Aufgabenmanager. Mit Sorgfalt erstellt.',
+        'modal.title': 'Aufgabennotizen',
+        'modal.closeAria': 'Notizen schließen',
+        'modal.notesFor': 'Notizen zu: "{task}"',
+        'modal.taskNotesPlaceholder': 'Notizen hier hinzufügen...',
+        'modal.taskNotesAria': 'Aufgabennotizen',
+        'modal.save': 'Notizen speichern',
+        'modal.cancel': 'Abbrechen',
+        'language.toggleToEnglish': 'Sprache auf Englisch umstellen',
+        'language.toggleToGerman': 'Sprache auf Deutsch umstellen',
+        'language.toggleToSpanish': 'Sprache auf Spanisch umstellen',
+        'theme.ariaEnable': 'Dunklen Modus aktivieren',
+        'theme.ariaDisable': 'Dunklen Modus deaktivieren',
+        'validation.empty': 'Bitte eine Aufgabenbeschreibung eingeben',
+        'validation.length': 'Die Aufgabenbeschreibung darf höchstens {max} Zeichen lang sein',
+        'validation.duplicate': 'Diese Aufgabe existiert bereits',
+        'announce.taskAdded': 'Aufgabe "{task}" hinzugefügt',
+        'announce.taskDeleted': 'Aufgabe "{task}" gelöscht',
+        'announce.taskStatusChanged': 'Aufgabe "{task}" {status}',
+        'announce.notesSaved': 'Notizen für Aufgabe "{task}" gespeichert',
+        'announce.completedDeleted': '{count} erledigte Aufgabe(n) gelöscht',
+        'confirm.deleteTask': 'Aufgabe "{task}" löschen?',
+        'confirm.deleteCompleted': '{count} erledigte Aufgabe(n) löschen?',
+        'task.markComplete': 'Aufgabe als erledigt markieren',
+        'task.markIncomplete': 'Aufgabe als nicht erledigt markieren',
+        'task.editNotesAria': 'Notizen bearbeiten für: {task}',
+        'task.deleteAria': 'Aufgabe löschen: {task}',
+        'task.notesButton': 'Notizen',
+        'task.deleteButton': 'Löschen',
+        'status.completed': 'als erledigt markiert',
+        'status.incomplete': 'als nicht erledigt markiert',
+        'feedback.notesSaved': 'Notizen erfolgreich gespeichert!',
+        'storage.saveFailed': 'Aufgaben konnten nicht gespeichert werden. Der Speicher ist möglicherweise voll.',
+        'storage.saveFailedRetries': 'Aufgaben konnten nach mehreren Versuchen nicht gespeichert werden. Bitte Speicher prüfen.',
+    },
+    es: {
+        'meta.title': 'Gestor de tareas - Mantente organizado',
+        'meta.description': 'Una aplicación de gestión de tareas sencilla y elegante',
+        'app.title': 'Gestor de tareas',
+        'app.subtitle': 'Lleva el control de tus tareas diarias',
+        'addTask.heading': 'Agregar una nueva tarea',
+        'form.placeholder': 'Agrega una nueva tarea...',
+        'form.ariaLabel': 'Descripción de la tarea',
+        'form.addButtonText': 'Agregar tarea',
+        'form.addButtonAria': 'Agregar tarea',
+        'stats.heading': 'Estadísticas de tareas',
+        'stats.total': 'Total',
+        'stats.completed': 'Completadas',
+        'stats.remaining': 'Pendientes',
+        'filter.heading': 'Filtrar tareas',
+        'filters.all': 'Todas',
+        'filters.active': 'Activas',
+        'filters.completed': 'Completadas',
+        'tasks.heading': 'Tus tareas',
+        'empty.noTasks': 'Aún no hay tareas. ¡Agrega una para comenzar! 🚀',
+        'empty.noFilterTasks': 'No hay tareas {filter}.',
+        'actions.heading': 'Acciones masivas',
+        'actions.clearCompleted': 'Borrar completadas',
+        'actions.clearCompletedAria': 'Borrar todas las tareas completadas',
+        'footer.text': '© 2025 Gestor de tareas. Hecho con cuidado.',
+        'modal.title': 'Notas de la tarea',
+        'modal.closeAria': 'Cerrar notas',
+        'modal.notesFor': 'Notas para: "{task}"',
+        'modal.taskNotesPlaceholder': 'Agrega tus notas aquí...',
+        'modal.taskNotesAria': 'Notas de la tarea',
+        'modal.save': 'Guardar notas',
+        'modal.cancel': 'Cancelar',
+        'language.toggleToEnglish': 'Cambiar el idioma a inglés',
+        'language.toggleToGerman': 'Cambiar el idioma a alemán',
+        'language.toggleToSpanish': 'Cambiar el idioma a español',
+        'theme.ariaEnable': 'Activar modo oscuro',
+        'theme.ariaDisable': 'Desactivar modo oscuro',
+        'validation.empty': 'Ingresa una descripción de la tarea',
+        'validation.length': 'La descripción debe tener {max} caracteres o menos',
+        'validation.duplicate': 'Esta tarea ya existe',
+        'announce.taskAdded': 'Tarea "{task}" agregada correctamente',
+        'announce.taskDeleted': 'Tarea "{task}" eliminada',
+        'announce.taskStatusChanged': 'Tarea "{task}" {status}',
+        'announce.notesSaved': 'Notas guardadas para la tarea "{task}"',
+        'announce.completedDeleted': '{count} tarea(s) completada(s) eliminada(s)',
+        'confirm.deleteTask': '¿Eliminar la tarea "{task}"?',
+        'confirm.deleteCompleted': '¿Eliminar {count} tarea(s) completada(s)?',
+        'task.markComplete': 'Marcar tarea como completada',
+        'task.markIncomplete': 'Marcar tarea como incompleta',
+        'task.editNotesAria': 'Editar notas para: {task}',
+        'task.deleteAria': 'Eliminar tarea: {task}',
+        'task.notesButton': 'Notas',
+        'task.deleteButton': 'Eliminar',
+        'status.completed': 'marcada como completada',
+        'status.incomplete': 'marcada como incompleta',
+        'feedback.notesSaved': '¡Notas guardadas correctamente!',
+        'storage.saveFailed': 'No se pudieron guardar las tareas. Es posible que el almacenamiento esté lleno.',
+        'storage.saveFailedRetries': 'No se pudieron guardar las tareas tras varios intentos. Revisa el almacenamiento.',
+    },
+};
+
+const interpolate = (template, variables = {}) =>
+    template.replace(/\{(\w+)\}/g, (match, key) =>
+        Object.prototype.hasOwnProperty.call(variables, key) ? variables[key] : match
+    );
+
 class TaskManager {
     constructor() {
         // DOM Elements
@@ -15,9 +200,13 @@ class TaskManager {
         this.taskInput = document.getElementById('taskInput');
         this.taskList = document.getElementById('taskList');
         this.emptyState = document.getElementById('emptyState');
+        this.emptyStateText = document.getElementById('emptyStateText');
         this.clearBtn = document.getElementById('clearBtn');
         this.formFeedback = document.getElementById('formFeedback');
-        this.filterButtons = document.querySelectorAll('.filter-btn');        this.themeToggle = document.getElementById('themeToggle');
+        this.filterButtons = document.querySelectorAll('.filter-btn');
+        this.languageToggleGroup = document.getElementById('languageToggleGroup');
+        this.languageButtons = document.querySelectorAll('[data-language]');
+        this.themeToggle = document.getElementById('themeToggle');
         this.themeToggleIcon = this.themeToggle?.querySelector('.theme-toggle-icon');
         this.themeToggleText = this.themeToggle?.querySelector('.theme-toggle-text');
 
@@ -41,9 +230,12 @@ class TaskManager {
         this.currentEditingTaskId = null;
         this.storageKey = 'tasks';
         this.themeStorageKey = 'theme-preference';
+        this.languageStorageKey = 'language-preference';
+        this.currentLanguage = 'en';
 
         // Initialize
         this.loadTasks();
+        this.initLanguage();
         this.initTheme();
         this.attachEventListeners();
         this.render();
@@ -63,6 +255,12 @@ class TaskManager {
         this.filterButtons.forEach((btn) => {
             btn.addEventListener('click', (e) => this.handleFilterChange(e));
         });
+
+        if (this.languageButtons.length > 0) {
+            this.languageButtons.forEach((btn) => {
+                btn.addEventListener('click', (e) => this.handleLanguageChange(e));
+            });
+        }
 
         // Theme toggle
         if (this.themeToggle) {
@@ -105,6 +303,129 @@ class TaskManager {
                 this.handleModalFocusTrap(e);
             }
         });
+    }
+
+    /**
+     * Translate a key for the current language
+     */
+    t(key, variables = {}) {
+        const dictionary = STRINGS[this.currentLanguage] || STRINGS.en;
+        const fallback = STRINGS.en || {};
+        const template = dictionary[key] || fallback[key] || key;
+        return interpolate(template, variables);
+    }
+
+    /**
+     * Initialize language preference
+     */
+    initLanguage() {
+        let storedLanguage = null;
+
+        try {
+            storedLanguage = localStorage.getItem(this.languageStorageKey);
+        } catch (error) {
+            console.error('Failed to load language preference:', error);
+        }
+
+        if (storedLanguage && STRINGS[storedLanguage]) {
+            this.currentLanguage = storedLanguage;
+        } else {
+            const browserLanguage = navigator.language || '';
+            const normalized = browserLanguage.toLowerCase();
+            if (normalized.startsWith('de')) {
+                this.currentLanguage = 'de';
+            } else if (normalized.startsWith('es')) {
+                this.currentLanguage = 'es';
+            } else {
+                this.currentLanguage = 'en';
+            }
+        }
+
+        this.applyLanguage(false);
+    }
+
+    /**
+     * Apply language to UI and persist changes
+     */
+    applyLanguage(shouldRender = true) {
+        document.documentElement.lang = this.currentLanguage;
+        this.localizeStaticUI();
+        this.updateLanguageToggle();
+        this.applyTheme(document.body.classList.contains('dark'));
+
+        if (shouldRender) {
+            this.render();
+        }
+    }
+
+    /**
+     * Update the language toggle UI
+     */
+    updateLanguageToggle() {
+        if (!this.languageButtons || this.languageButtons.length === 0) {
+            return;
+        }
+
+        this.languageButtons.forEach((button) => {
+            const language = button.getAttribute('data-language');
+            const isActive = language === this.currentLanguage;
+            button.setAttribute('aria-pressed', String(isActive));
+
+            if (language === 'en') {
+                button.setAttribute('aria-label', this.t('language.toggleToEnglish'));
+            } else if (language === 'de') {
+                button.setAttribute('aria-label', this.t('language.toggleToGerman'));
+            } else if (language === 'es') {
+                button.setAttribute('aria-label', this.t('language.toggleToSpanish'));
+            }
+        });
+    }
+
+    /**
+     * Localize static UI text and attributes
+     */
+    localizeStaticUI() {
+        const textNodes = document.querySelectorAll('[data-i18n]');
+        textNodes.forEach((node) => {
+            const key = node.getAttribute('data-i18n');
+            if (!key) return;
+            node.textContent = this.t(key);
+        });
+
+        const nodesWithAttributes = document.querySelectorAll('[data-i18n-attr-content], [data-i18n-attr-placeholder], [data-i18n-attr-aria-label]');
+        nodesWithAttributes.forEach((node) => {
+            Array.from(node.attributes).forEach((attr) => {
+                if (!attr.name.startsWith('data-i18n-attr-')) {
+                    return;
+                }
+
+                const attrName = attr.name.replace('data-i18n-attr-', '');
+                const key = attr.value;
+                if (!key) return;
+                node.setAttribute(attrName, this.t(key));
+            });
+        });
+    }
+
+    /**
+     * Toggle language and persist preference
+     */
+    handleLanguageChange(event) {
+        const language = event.currentTarget?.getAttribute('data-language');
+
+        if (!language || !STRINGS[language] || language === this.currentLanguage) {
+            return;
+        }
+
+        this.currentLanguage = language;
+
+        try {
+            localStorage.setItem(this.languageStorageKey, this.currentLanguage);
+        } catch (error) {
+            console.error('Failed to save language preference:', error);
+        }
+
+        this.applyLanguage();
     }
 
     /**
@@ -152,7 +473,10 @@ class TaskManager {
 
         if (this.themeToggle) {
             this.themeToggle.setAttribute('aria-pressed', useDark);
-            this.themeToggle.setAttribute('aria-label', useDark ? 'Disable dark mode' : 'Enable dark mode');
+            this.themeToggle.setAttribute(
+                'aria-label',
+                this.t(useDark ? 'theme.ariaDisable' : 'theme.ariaEnable')
+            );
         }
 
         if (this.themeToggleIcon) {
@@ -174,18 +498,18 @@ class TaskManager {
 
         // Validation
         if (!taskText) {
-            this.showFeedback('Please enter a task description');
+            this.showFeedback(this.t('validation.empty'));
             return;
         }
 
         if (taskText.length > CONFIG.MAX_TASK_LENGTH) {
-            this.showFeedback(`Task description must be ${CONFIG.MAX_TASK_LENGTH} characters or less`);
+            this.showFeedback(this.t('validation.length', { max: CONFIG.MAX_TASK_LENGTH }));
             return;
         }
 
         // Check for duplicates
         if (this.tasks.some((task) => task.text.toLowerCase() === taskText.toLowerCase())) {
-            this.showFeedback('This task already exists');
+            this.showFeedback(this.t('validation.duplicate'));
             return;
         }
 
@@ -210,7 +534,7 @@ class TaskManager {
         this.taskInput.focus();
 
         // Announce to screen readers
-        this.announce(`Task "${taskText}" added successfully`);
+        this.announce(this.t('announce.taskAdded', { task: taskText }));
     }
 
     /**
@@ -223,7 +547,7 @@ class TaskManager {
         if (task) {
             this.currentEditingTaskId = taskId;
             this.previousFocusElement = event.target; // Store reference to triggering button
-            this.modalTaskTitle.textContent = `Notes for: "${this.escapeHtml(task.text)}"`;
+            this.modalTaskTitle.textContent = this.t('modal.notesFor', { task: this.escapeHtml(task.text) });
             this.notesTextarea.value = task.notes || '';
             this.openNotesModal();
             this.notesTextarea.focus();
@@ -241,8 +565,8 @@ class TaskManager {
             this.saveTasks();
             this.render();
             this.closeNotesModal();
-            this.announce(`Notes saved for task "${task.text}"`);
-            this.showTempFeedback('Notes saved successfully!', 'success');
+            this.announce(this.t('announce.notesSaved', { task: task.text }));
+            this.showTempFeedback(this.t('feedback.notesSaved'), 'success');
         }
     }
 
@@ -279,11 +603,11 @@ class TaskManager {
         const taskText = event.target.dataset.taskText;
 
         // Add confirmation for consistency with bulk delete
-        if (confirm(`Delete task "${taskText}"?`)) {
+        if (confirm(this.t('confirm.deleteTask', { task: taskText }))) {
             this.tasks = this.tasks.filter((task) => task.id !== taskId);
             this.saveTasks();
             this.render();
-            this.announce(`Task "${taskText}" deleted`);
+            this.announce(this.t('announce.taskDeleted', { task: taskText }));
         }
     }
 
@@ -299,8 +623,8 @@ class TaskManager {
             this.saveTasks();
             this.render();
 
-            const status = task.completed ? 'marked as completed' : 'marked as incomplete';
-            this.announce(`Task "${task.text}" ${status}`);
+            const status = task.completed ? this.t('status.completed') : this.t('status.incomplete');
+            this.announce(this.t('announce.taskStatusChanged', { task: task.text, status }));
         }
     }
 
@@ -314,11 +638,11 @@ class TaskManager {
             return;
         }
 
-        if (confirm(`Delete ${completedCount} completed task(s)?`)) {
+        if (confirm(this.t('confirm.deleteCompleted', { count: completedCount }))) {
             this.tasks = this.tasks.filter((task) => !task.completed);
             this.saveTasks();
             this.render();
-            this.announce(`${completedCount} completed task(s) deleted`);
+            this.announce(this.t('announce.completedDeleted', { count: completedCount }));
         }
     }
 
@@ -381,10 +705,11 @@ class TaskManager {
 
         // Show/hide empty state
         if (filteredTasks.length === 0) {
-            const emptyMessage = this.tasks.length === 0 
-                ? 'No tasks yet. Add one to get started! 🚀'
-                : `No ${this.currentFilter !== 'all' ? this.currentFilter : ''} tasks.`;
-            this.emptyState.textContent = emptyMessage;
+            const emptyMessage = this.tasks.length === 0
+                ? this.t('empty.noTasks')
+                : this.t('empty.noFilterTasks', { filter: this.t(`filters.${this.currentFilter}`) });
+            const emptyTarget = this.emptyStateText || this.emptyState;
+            emptyTarget.textContent = emptyMessage;
             this.emptyState.style.display = 'block';
             this.taskList.style.display = 'none';
         } else {
@@ -404,6 +729,7 @@ class TaskManager {
     createTaskElement(task) {
         const className = task.completed ? 'task-item completed' : 'task-item';
         const notesIndicator = task.notes ? ' 📝' : '';
+        const checkboxLabel = task.completed ? this.t('task.markIncomplete') : this.t('task.markComplete');
 
         return `
             <li class="${className}" role="listitem">
@@ -412,7 +738,7 @@ class TaskManager {
                     class="task-checkbox"
                     data-task-id="${task.id}"
                     ${task.completed ? 'checked' : ''}
-                    aria-label="Mark task as ${task.completed ? 'incomplete' : 'complete'}"
+                    aria-label="${checkboxLabel}"
                 >
                 <div class="task-content">
                     <span class="task-text">${this.escapeHtml(task.text)}${notesIndicator}</span>
@@ -421,17 +747,17 @@ class TaskManager {
                     <button
                         class="task-btn notes"
                         data-task-id="${task.id}"
-                        aria-label="Edit notes for: ${this.escapeHtml(task.text)}"
+                        aria-label="${this.t('task.editNotesAria', { task: this.escapeHtml(task.text) })}"
                     >
-                        Notes
+                        ${this.t('task.notesButton')}
                     </button>
                     <button
                         class="task-btn delete"
                         data-task-id="${task.id}"
                         data-task-text="${this.escapeHtml(task.text)}"
-                        aria-label="Delete task: ${this.escapeHtml(task.text)}"
+                        aria-label="${this.t('task.deleteAria', { task: this.escapeHtml(task.text) })}"
                     >
-                        Delete
+                        ${this.t('task.deleteButton')}
                     </button>
                 </div>
             </li>
@@ -472,8 +798,8 @@ class TaskManager {
                 } else {
                     this.showFeedback(
                         retryCount >= maxRetries 
-                            ? 'Failed to save tasks after multiple attempts. Please check your storage.'
-                            : 'Failed to save tasks. Storage might be full.'
+                            ? this.t('storage.saveFailedRetries')
+                            : this.t('storage.saveFailed')
                     );
                 }
             }

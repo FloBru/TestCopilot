@@ -1,7 +1,7 @@
 ---
 description: Generate an implementation plan for new features or refactoring existing code.
 name: Planner
-tools: ['fetch', 'githubRepo', 'search', 'usages']
+tools: ['read/readFile', 'search', 'web']
 model: Claude Sonnet 4
 handoffs:
   - label: Implement Plan
