@@ -79,6 +79,105 @@ body.dark {
     --shadow-lg: 0 16px 24px -8px rgba(0, 0, 0, 0.6);
 }
 
+body.unicorn {
+    --primary-color: #ff69b4;
+    --primary-hover: #ff1493;
+    --primary-light: #ffe4f5;
+    --secondary-color: #9370db;
+    --secondary-hover: #8a2be2;
+    --success-color: #ff69b4;
+    --success-light: #ffb3e6;
+    --danger-color: #ff6ec7;
+    --danger-hover: #ff1493;
+    --danger-light: #ffe6f5;
+    --warning-color: #ffd700;
+    --warning-light: #fff9e6;
+    
+    --text-primary: #ff1493;
+    --text-secondary: #ff69b4;
+    --text-light: #ffb3d9;
+    
+    --bg-primary: #fff0f9;
+    --bg-secondary: #ffe4f5;
+    --bg-tertiary: #ffd9f0;
+    
+    --border-color: #ffb3e6;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="24" font-size="24">🦄</text></svg>'), auto !important;
+}
+
+body.unicorn * {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="24" font-size="24">🦄</text></svg>'), auto !important;
+}
+
+body.unicorn {
+    background: linear-gradient(135deg, #ffe4f5 0%, #ffd9f0 25%, #e6d9ff 50%, #d9f0ff 75%, #ffe4d9 100%);
+    animation: rainbowShift 10s ease infinite;
+}
+
+@keyframes rainbowShift {
+    0%, 100% {
+        background: linear-gradient(135deg, #ffe4f5 0%, #ffd9f0 25%, #e6d9ff 50%, #d9f0ff 75%, #ffe4d9 100%);
+    }
+    25% {
+        background: linear-gradient(135deg, #ffd9f0 0%, #e6d9ff 25%, #d9f0ff 50%, #ffe4d9 75%, #ffe4f5 100%);
+    }
+    50% {
+        background: linear-gradient(135deg, #e6d9ff 0%, #d9f0ff 25%, #ffe4d9 50%, #ffe4f5 75%, #ffd9f0 100%);
+    }
+    75% {
+        background: linear-gradient(135deg, #d9f0ff 0%, #ffe4d9 25%, #ffe4f5 50%, #ffd9f0 75%, #e6d9ff 100%);
+    }
+}
+
+body.unicorn .app-header h1 {
+    background: linear-gradient(90deg, #ff1493, #ff69b4, #9370db, #4169e1, #00ff00, #ffff00, #ff8c00, #ff1493);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: rainbowText 3s ease infinite;
+    text-shadow: 0 0 30px rgba(255, 20, 147, 0.5);
+}
+
+@keyframes rainbowText {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+body.unicorn .btn-primary {
+    background: linear-gradient(135deg, #ff69b4, #9370db);
+    animation: buttonGlow 2s ease-in-out infinite;
+}
+
+@keyframes buttonGlow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 105, 180, 0.6), 0 0 40px rgba(147, 112, 219, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(255, 105, 180, 0.8), 0 0 60px rgba(147, 112, 219, 0.6);
+    }
+}
+
+body.unicorn .task-item {
+    background: linear-gradient(135deg, #fff0f9, #f5e6ff);
+    border-left-color: #ff69b4;
+}
+
+body.unicorn .task-item.completed {
+    border-left-color: #9370db;
+    background: linear-gradient(135deg, #ffe4f5, #e6d9ff);
+}
+
+body.unicorn .ghost {
+    color: #ff69b4;
+    text-shadow: 0 0 20px #ff69b4, 0 0 40px rgba(255, 105, 180, 0.6);
+    filter: drop-shadow(0 0 10px #ff69b4);
+}
+
 /* ==========================================
    Global Styles
    ========================================== */
@@ -269,46 +368,8 @@ section:last-of-type {
     box-shadow: var(--shadow-sm);
 }
 
-.language-toggle-group {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.35rem 0.45rem;
-    border-radius: 999px;
-    border: 1px solid var(--border-color);
-    background: var(--bg-primary);
-    box-shadow: var(--shadow-sm);
-}
-
-.language-toggle-btn {
-    padding: 0.35rem 0.7rem;
-    border-radius: 999px;
-    border: 1px solid transparent;
-    background: transparent;
-    color: var(--text-primary);
-    font-size: 0.8rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.language-toggle-btn[aria-pressed="true"] {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-}
-
-.language-toggle-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
-}
-
-.language-toggle-btn:focus-visible {
-    outline: 3px solid var(--primary-light);
-    outline-offset: 2px;
+.unicorn-toggle {
+    top: 4rem;
 }
 
 .theme-toggle:hover {

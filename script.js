@@ -204,11 +204,15 @@ class TaskManager {
         this.clearBtn = document.getElementById('clearBtn');
         this.formFeedback = document.getElementById('formFeedback');
         this.filterButtons = document.querySelectorAll('.filter-btn');
+
+
+
         this.languageToggleGroup = document.getElementById('languageToggleGroup');
         this.languageButtons = document.querySelectorAll('[data-language]');
         this.themeToggle = document.getElementById('themeToggle');
         this.themeToggleIcon = this.themeToggle?.querySelector('.theme-toggle-icon');
         this.themeToggleText = this.themeToggle?.querySelector('.theme-toggle-text');
+        this.unicornToggle = document.getElementById('unicornToggle');
 
         // Modal elements
         this.notesModal = document.getElementById('notesModal');
@@ -230,13 +234,13 @@ class TaskManager {
         this.currentEditingTaskId = null;
         this.storageKey = 'tasks';
         this.themeStorageKey = 'theme-preference';
-        this.languageStorageKey = 'language-preference';
-        this.currentLanguage = 'en';
+        this.unicornStorageKey = 'unicorn-mode';
 
         // Initialize
         this.loadTasks();
         this.initLanguage();
         this.initTheme();
+        this.initUnicornMode();
         this.attachEventListeners();
         this.render();
     }
@@ -265,6 +269,11 @@ class TaskManager {
         // Theme toggle
         if (this.themeToggle) {
             this.themeToggle.addEventListener('click', () => this.handleThemeToggle());
+        }
+
+        // Unicorn mode toggle
+        if (this.unicornToggle) {
+            this.unicornToggle.addEventListener('click', () => this.handleUnicornToggle());
         }
 
         // Event delegation for task actions (delete, complete, notes)
@@ -464,10 +473,13 @@ class TaskManager {
      * Apply theme to document and update toggle UI
      */
     applyTheme(useDark) {
-        document.body.classList.toggle('dark', useDark);
+        const isUnicorn = document.body.classList.contains('unicorn');
+        if (!isUnicorn) {
+            document.body.classList.toggle('dark', useDark);
+        }
 
         const ghostElement = document.getElementById('ghost');
-        if (ghostElement) {
+        if (ghostElement && !isUnicorn) {
             ghostElement.textContent = useDark ? '👻' : '🐇';
         }
 
@@ -485,6 +497,58 @@ class TaskManager {
 
         if (this.themeToggleText) {
             this.themeToggleText.textContent = useDark ? 'Light mode' : 'Dark mode';
+        }
+    }
+
+    /**
+     * Initialize unicorn mode based on stored preference
+     */
+    initUnicornMode() {
+        let storedUnicorn = null;
+
+        try {
+            storedUnicorn = localStorage.getItem(this.unicornStorageKey);
+        } catch (error) {
+            console.error('Failed to load unicorn mode preference:', error);
+        }
+
+        const useUnicorn = storedUnicorn === 'true';
+        this.applyUnicornMode(useUnicorn);
+    }
+
+    /**
+     * Toggle unicorn mode and persist preference
+     */
+    handleUnicornToggle() {
+        const useUnicorn = !document.body.classList.contains('unicorn');
+        this.applyUnicornMode(useUnicorn);
+
+        try {
+            localStorage.setItem(this.unicornStorageKey, useUnicorn);
+        } catch (error) {
+            console.error('Failed to save unicorn mode preference:', error);
+        }
+    }
+
+    /**
+     * Apply unicorn mode to document and update toggle UI
+     */
+    applyUnicornMode(useUnicorn) {
+        if (useUnicorn) {
+            document.body.classList.remove('dark');
+            document.body.classList.add('unicorn');
+        } else {
+            document.body.classList.remove('unicorn');
+        }
+
+        const ghostElement = document.getElementById('ghost');
+        if (ghostElement) {
+            ghostElement.textContent = useUnicorn ? '🦄' : (document.body.classList.contains('dark') ? '👻' : '🐇');
+        }
+
+        if (this.unicornToggle) {
+            this.unicornToggle.setAttribute('aria-pressed', useUnicorn);
+            this.unicornToggle.setAttribute('aria-label', useUnicorn ? 'Disable unicorn mode' : 'Enable unicorn mode');
         }
     }
 
