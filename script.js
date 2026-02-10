@@ -44,6 +44,7 @@ const STRINGS = {
         'language.toggleToEnglish': 'Switch language to English',
         'language.toggleToGerman': 'Switch language to German',
         'language.toggleToSpanish': 'Switch language to Spanish',
+        'language.toggleToFrench': 'Switch language to French',
         'theme.ariaEnable': 'Enable dark mode',
         'theme.ariaDisable': 'Disable dark mode',
         'validation.empty': 'Please enter a task description',
@@ -103,6 +104,7 @@ const STRINGS = {
         'language.toggleToEnglish': 'Sprache auf Englisch umstellen',
         'language.toggleToGerman': 'Sprache auf Deutsch umstellen',
         'language.toggleToSpanish': 'Sprache auf Spanisch umstellen',
+        'language.toggleToFrench': 'Sprache auf Französisch umstellen',
         'theme.ariaEnable': 'Dunklen Modus aktivieren',
         'theme.ariaDisable': 'Dunklen Modus deaktivieren',
         'validation.empty': 'Bitte eine Aufgabenbeschreibung eingeben',
@@ -162,6 +164,7 @@ const STRINGS = {
         'language.toggleToEnglish': 'Cambiar el idioma a inglés',
         'language.toggleToGerman': 'Cambiar el idioma a alemán',
         'language.toggleToSpanish': 'Cambiar el idioma a español',
+        'language.toggleToFrench': 'Cambiar el idioma a francés',
         'theme.ariaEnable': 'Activar modo oscuro',
         'theme.ariaDisable': 'Desactivar modo oscuro',
         'validation.empty': 'Ingresa una descripción de la tarea',
@@ -185,6 +188,66 @@ const STRINGS = {
         'feedback.notesSaved': '¡Notas guardadas correctamente!',
         'storage.saveFailed': 'No se pudieron guardar las tareas. Es posible que el almacenamiento esté lleno.',
         'storage.saveFailedRetries': 'No se pudieron guardar las tareas tras varios intentos. Revisa el almacenamiento.',
+    },
+    fr: {
+        'meta.title': 'Gestionnaire de tâches - Restez organisé',
+        'meta.description': 'Une application de gestion de tâches simple et élégante',
+        'app.title': 'Gestionnaire de tâches',
+        'app.subtitle': 'Gardez le contrôle de vos tâches quotidiennes',
+        'addTask.heading': 'Ajouter une nouvelle tâche',
+        'form.placeholder': 'Ajouter une nouvelle tâche...',
+        'form.ariaLabel': 'Description de la tâche',
+        'form.addButtonText': 'Ajouter une tâche',
+        'form.addButtonAria': 'Ajouter une tâche',
+        'stats.heading': 'Statistiques des tâches',
+        'stats.total': 'Total',
+        'stats.completed': 'Terminées',
+        'stats.remaining': 'Restantes',
+        'filter.heading': 'Filtrer les tâches',
+        'filters.all': 'Toutes',
+        'filters.active': 'Actives',
+        'filters.completed': 'Terminées',
+        'tasks.heading': 'Vos tâches',
+        'empty.noTasks': 'Aucune tâche pour le moment. Ajoutez-en une pour commencer ! ðŸš€',
+        'empty.noFilterTasks': 'Aucune tâche {filter}.',
+        'actions.heading': 'Actions groupées',
+        'actions.clearCompleted': 'Supprimer les terminées',
+        'actions.clearCompletedAria': 'Supprimer toutes les tâches terminées',
+        'footer.text': 'Â© 2025 Gestionnaire de tâches. Fait avec soin.',
+        'modal.title': 'Notes de la tâche',
+        'modal.closeAria': 'Fermer les notes',
+        'modal.notesFor': 'Notes pour : "{task}"',
+        'modal.taskNotesPlaceholder': 'Ajoutez vos notes ici...',
+        'modal.taskNotesAria': 'Notes de la tâche',
+        'modal.save': 'Enregistrer',
+        'modal.cancel': 'Annuler',
+        'language.toggleToEnglish': 'Passer la langue en anglais',
+        'language.toggleToGerman': 'Passer la langue en allemand',
+        'language.toggleToSpanish': 'Passer la langue en espagnol',
+        'language.toggleToFrench': 'Passer la langue en français',
+        'theme.ariaEnable': 'Activer le mode sombre',
+        'theme.ariaDisable': 'Désactiver le mode sombre',
+        'validation.empty': 'Veuillez saisir une description de tâche',
+        'validation.length': 'La description doit comporter {max} caractères ou moins',
+        'validation.duplicate': 'Cette tâche existe déjà',
+        'announce.taskAdded': 'Tâche "{task}" ajoutée avec succès',
+        'announce.taskDeleted': 'Tâche "{task}" supprimée',
+        'announce.taskStatusChanged': 'Tâche "{task}" {status}',
+        'announce.notesSaved': 'Notes enregistrées pour la tâche "{task}"',
+        'announce.completedDeleted': '{count} tâche(s) terminée(s) supprimée(s)',
+        'confirm.deleteTask': 'Supprimer la tâche "{task}" ?',
+        'confirm.deleteCompleted': 'Supprimer {count} tâche(s) terminée(s) ?',
+        'task.markComplete': 'Marquer la tâche comme terminée',
+        'task.markIncomplete': 'Marquer la tâche comme non terminée',
+        'task.editNotesAria': 'Modifier les notes pour : {task}',
+        'task.deleteAria': 'Supprimer la tâche : {task}',
+        'task.notesButton': 'Notes',
+        'task.deleteButton': 'Supprimer',
+        'status.completed': 'marquée comme terminée',
+        'status.incomplete': 'marquée comme non terminée',
+        'feedback.notesSaved': 'Notes enregistrées avec succès !',
+        'storage.saveFailed': 'Impossible d\'enregistrer les tâches. Le stockage est peut-être plein.',
+        'storage.saveFailedRetries': 'Impossible d\'enregistrer les tâches après plusieurs tentatives. Vérifiez le stockage.',
     },
 };
 
@@ -347,6 +410,8 @@ class TaskManager {
                 this.currentLanguage = 'de';
             } else if (normalized.startsWith('es')) {
                 this.currentLanguage = 'es';
+            } else if (normalized.startsWith('fr')) {
+                this.currentLanguage = 'fr';
             } else {
                 this.currentLanguage = 'en';
             }
@@ -388,6 +453,8 @@ class TaskManager {
                 button.setAttribute('aria-label', this.t('language.toggleToGerman'));
             } else if (language === 'es') {
                 button.setAttribute('aria-label', this.t('language.toggleToSpanish'));
+            } else if (language === 'fr') {
+                button.setAttribute('aria-label', this.t('language.toggleToFrench'));
             }
         });
     }
