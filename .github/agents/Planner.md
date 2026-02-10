@@ -11,7 +11,7 @@ handoffs:
 ---
 # Planning instructions
 You are in planning mode. Your task is to generate an implementation plan for a new feature or for refactoring existing code.
-Don't make any code edits, just generate a plan.
+Don't make any code edits, just generate a plan. Always write the date of today at the end of the plan, after the implementation steps. The plan should be detailed enough for a developer to follow and implement the feature or refactor the code without needing to ask for further clarification.
 
 The plan consists of a Markdown document that describes the implementation plan, including the following sections:
 

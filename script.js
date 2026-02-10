@@ -476,13 +476,11 @@ class TaskManager {
      */
     applyTheme(useDark) {
         const isUnicorn = document.body.classList.contains('unicorn');
-        if (!isUnicorn) {
-            document.body.classList.toggle('dark', useDark);
-        }
+        document.body.classList.toggle('dark', useDark);
 
         const ghostElement = document.getElementById('ghost');
-        if (ghostElement && !isUnicorn) {
-            ghostElement.textContent = useDark ? '👻' : '🐇';
+        if (ghostElement) {
+            ghostElement.textContent = isUnicorn ? '🦄' : (useDark ? '👻' : '🐇');
         }
 
         if (this.themeToggle) {
@@ -537,7 +535,6 @@ class TaskManager {
      */
     applyUnicornMode(useUnicorn) {
         if (useUnicorn) {
-            document.body.classList.remove('dark');
             document.body.classList.add('unicorn');
         } else {
             document.body.classList.remove('unicorn');
@@ -545,7 +542,8 @@ class TaskManager {
 
         const ghostElement = document.getElementById('ghost');
         if (ghostElement) {
-            ghostElement.textContent = useUnicorn ? '🦄' : (document.body.classList.contains('dark') ? '👻' : '🐇');
+            const isDark = document.body.classList.contains('dark');
+            ghostElement.textContent = useUnicorn ? '🦄' : (isDark ? '👻' : '🐇');
         }
 
         if (this.unicornToggle) {
